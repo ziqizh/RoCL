@@ -10,7 +10,7 @@ def test_parser():
     parser.add_argument('--name', default='', type=str, help='name of run')
     parser.add_argument('--seed', default=2342, type=int, help='random seed')
     parser.add_argument('--batch-size', default=128, type=int, help='batch size / multi-gpu setting: batch per gpu')
-    
+    parser.add_argument('--module', action='store_true')
     ##### arguments for data augmentation #####
     parser.add_argument('--color_jitter_strength', default=0.5, type=float, help='0.5 for CIFAR, 1.0 for ImageNet')
     parser.add_argument('--temperature', default=0.5, type=float, help='temperature for pairwise-similarity')
@@ -122,7 +122,7 @@ def parser():
     parser.add_argument('--name', default='', type=str, help='name of run')
     parser.add_argument('--seed', default=0, type=int, help='random seed')
     parser.add_argument('--batch-size', default=256, type=int, help='batch size / multi-gpu setting: batch per gpu')
-    parser.add_argument('--epoch', default=1000, type=int, 
+    parser.add_argument('--epoch', default=1001, type=int, 
                         help='total epochs to run')
 
     ##### arguments for data augmentation #####

@@ -10,6 +10,7 @@ import torch.backends.cudnn as cudnn
 import torch.nn as nn
 import data_loader
 import model_loader
+from argument import *
 
 from utils import progress_bar
 from collections import OrderedDict

@@ -80,9 +80,14 @@ def load(args, epoch):
         add = '_epoch_'+str(epoch)
 
     checkpoint_ = torch.load(args.load_checkpoint+add)
+    print('MODELS')
+    for name, param in model.named_parameters():
+        print(name)
 
     new_state_dict = OrderedDict()
+    print('checkpoint')
     for k, v in checkpoint_['model'].items():
+        print(k)
         name = k[7:]
         new_state_dict[name] = v
 
