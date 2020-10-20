@@ -38,7 +38,7 @@ else:
 if args.local_rank % ngpus_per_node == 0:
     print_args(args)
 
-start_epoch = 900  # start from epoch 0 or last checkpoint epoch
+start_epoch = 0  # start from epoch 0 or last checkpoint epoch
 
 if args.seed != 0:
     torch.manual_seed(args.seed)
@@ -99,8 +99,6 @@ projector   = torch.nn.parallel.DistributedDataParallel(
                 find_unused_parameters=True,
 )
 
-model.load_state_dict(torch.load("/home/ziqizh/code/contrastive-learning/RoCL/src/checkpoint/ckpt.t7roclRep_attack_ep_0.0314_alpha_0.007_min_val_0.0_max_val_1.0_max_iters_7_type_linf_randomstart_Truecontrastive_ResNet18_cifar-10_b256_nGPU2_l256_0_epoch_900")["model"])
-projector.load_state_dict(torch.load("/home/ziqizh/code/contrastive-learning/RoCL/src/checkpoint/ckpt.t7roclRep_attack_ep_0.0314_alpha_0.007_min_val_0.0_max_val_1.0_max_iters_7_type_linf_randomstart_Truecontrastive_ResNet18_cifar-10_b256_nGPU2_l256_0_projector_epoch_900")["model"])
 
 cudnn.benchmark = True
 print_status('Using CUDA..')
@@ -113,7 +111,6 @@ model_params += projector.parameters()
 # LARS optimizer from KAKAO-BRAIN github "pip install torchlars" or git from https://github.com/kakaobrain/torchlars
 base_optimizer  = optim.SGD(model_params, lr=args.lr, momentum=0.9, weight_decay=args.decay)
 optimizer       = LARS(optimizer=base_optimizer, eps=1e-8, trust_coef=0.001)
-optimizer.load_state_dict(torch.load("/home/ziqizh/code/contrastive-learning/RoCL/src/checkpoint/ckpt.t7roclRep_attack_ep_0.0314_alpha_0.007_min_val_0.0_max_val_1.0_max_iters_7_type_linf_randomstart_Truecontrastive_ResNet18_cifar-10_b256_nGPU2_l256_0_epoch_900")["optimizer_state"])
 
 # Cosine learning rate annealing (SGDR) & Learning rate warmup git from https://github.com/ildoonet/pytorch-gradual-warmup-lr #
 scheduler_cosine = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, args.epoch)
